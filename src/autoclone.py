@@ -116,7 +116,7 @@ class AutoClone(object):
         self.get_and_write_submitted_codes()
 
     @staticmethod
-def get_code(self, contest_id, submission_id):
+    def get_code(self, contest_id, submission_id):
         submission_url = (
             f"https://atcoder.jp/contests/{contest_id}/submissions/{submission_id}"
         )
