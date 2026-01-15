@@ -116,24 +116,28 @@ class AutoClone(object):
         self.get_and_write_submitted_codes()
 
     @staticmethod
-    def get_code(self, *args, **kwargs):
-        # 実際に何が渡ってきているか全部表示する
-        print(f"DEBUG: args = {args}")
-        print(f"DEBUG: kwargs = {kwargs}")
-        
-        # 2つ引数があるはずなので、無理やり取り出す
-        if len(args) >= 2:
-            contest_id = args[0]
-            submission_id = args[1]
-        else:
-            print("DEBUG: Arguments are missing!")
-            return ""
+    def get_code(contest_id: str, submission_id: int) -> str:
+        """
+        Get code from AtCoder page
 
-        submission_url = f"https://atcoder.jp/contests/{contest_id}/submissions/{submission_id}"
-        print(f"DEBUG: URL = {submission_url}")
-        
-        res = requests.get(submission_url)
-        return BeautifulSoup(res.content, "html.parser").pre.string
+        Parameters
+        ----------
+        contest_id : str
+            target contest_id
+        submission_id : int
+            target submissio_id
+
+        Returns
+        -------
+        str
+            str of raw code without extension
+        """
+        submission_url = (
+            f"https://atcoder.jp/contests/{contest_id}/submissions/{submission_id}"
+        )
+        return BeautifulSoup(
+            requests.get(submission_url).content, "html.parser"
+        ).pre.string
 
     @staticmethod
     def write_code(code, contest_id, problem_id, language) -> None:
